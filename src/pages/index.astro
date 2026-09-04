@@ -1,11 +1,24 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from '@/layouts/Layout.astro';
+import Navbar from '@/components/NavBar.astro';
+import Welcome from '@/components/Welcome.astro';
+import AcademicProcesses from '@/components/academicProcesses.astro';
+import About from '@/components/About.astro';
+import Contact from '@/components/contact.astro';
+import History from '@/components/history.astro';
+import Schedules from '@/components/Schedules.astro';
+import RecentPosts from '@/components/RecentPosts.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title  = 'Colegio El Japon IED'
 ---
 
-<Layout>
+<Layout title={title}>
+	<Navbar />
 	<Welcome />
+	<!-- <About /> -->
+	<!-- <AcademicProcesses /> -->
+	<RecentPosts />
+	<Schedules />
+	<Contact />
+	<!-- <History />	 -->
 </Layout>

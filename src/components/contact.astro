@@ -1,0 +1,29 @@
+---
+import { Icon } from "astro-icon/components";
+
+const infoContact = [
+    { icon: "location", info: "KR 78 G #38 C - 11 SUR" },
+    { icon: "phone", info: "2732515", href: "tel:2732515" },
+    { icon: "whatsapp", info: "+57 315 293 3066", href: "https://wa.me/573152933066?text=Hola%2C%20necesito%20información." },
+    { icon: "email", info: "contactenos@colegiojapon.edu.co", href: "mailto:contactenos@colegiojapon.edu.co" },
+    { icon: "time", info: "Lun - Vie: 7:30 AM - 4:30 PM" },
+];
+---
+
+<div class="rounded-2xl grow bg-white border border-gray-200 p-6 flex flex-col gap-4">
+    <h2 class="text-xl font-semibold">Contactanos</h2>
+    {
+        infoContact.map(({icon, info, href}) => (
+            <div class="flex items-start gap-3">
+                <Icon name={icon} class="size-5 text-brand-blue mt-0.5 shrink-0"/>
+                {href ? (
+                    <a href={href} class="text-sm hover:text-brand-blue transition-colors">
+                        {info}
+                    </a>
+                ) : (
+                    <span class="text-sm">{info}</span>
+                )}
+            </div>
+        ))
+    }
+</div>

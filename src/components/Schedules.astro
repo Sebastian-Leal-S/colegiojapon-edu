@@ -1,0 +1,122 @@
+---
+const schedules = [
+    {
+        id: 1,
+        title: "Información General",
+        subtitle: "",
+        items: [
+            "Al momento de contactarnos son requeridos los datos completos del acudiente y el estudiante",
+            "correosinstitucional@colegiojapon.edu.co",
+            "contactenos@colegiojapon.edu.co",
+        ],
+        schedule: [{ day: "Lunes a Viernes", hours: "8:00am a 4:00pm" }],
+    },
+    {
+        id: 2,
+        title: "Secretaría de Rectoría",
+        subtitle: "",
+        items: [
+            "Horario de atención para radicación y entrega de correspondencia",
+        ],
+        schedule: [
+            {
+                day: "Martes y Jueves",
+                hours: "8:00am a 11:00am | 2:00pm a 4:00pm",
+            },
+        ],
+    },
+    {
+        id: 3,
+        title: "Secretaría Académica",
+        subtitle: "",
+        items: [
+            "Constancias y retiro de documentos para jornada mañana, tarde y noche",
+        ],
+        schedule: [{ day: "Lunes a Viernes", hours: "8:00am a 4:00pm" }],
+    },
+    {
+        id: 4,
+        title: "Solicitud de contancias",
+        subtitle: "",
+        items: [
+            "Solicitud de contancias y certificados de notas para estudiantes activos y no activos",
+            "Formulario Unico de Tramites (FUT): https://fut.redp.edu.co/FUT-web/#inicio",
+        ],
+        schedule: [{ day: "Dias habiles", hours: "" }],
+    },
+];
+
+const colorMap = {
+    green: "border-green-500 bg-green-50",
+    yellow: "border-yellow-500 bg-yellow-50",
+};
+
+const titleColorMap = {
+    green: "text-[#7BA43E]",
+    yellow: "text-[#FBBF24]",
+};
+
+const getColor = (index: number) => (index % 2 === 0 ? "green" : "yellow");
+---
+
+<section class="p-4 bg-linear-to-br from-gray-50 to-gray-100">
+    <div class=" mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-12 text-gray-800 sm:">
+            Canales y horarios de atención
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {
+                schedules.map((schedule, index) => {
+                    const color = getColor(index);
+                    return (
+                        <div
+                            class={`flex flex-col border-l-4 border-b-4 rounded-lg shadow-md hover:shadow-lg transition-shadow p-6 ${colorMap[color]}`}
+                        >
+                            <div class="mb-4">
+                                <h2
+                                    class={`text-2xl font-bold ${titleColorMap[color]}`}
+                                >
+                                    {schedule.title}
+                                </h2>
+                                <p class="text-sm text-gray-600 italic">
+                                    {schedule.subtitle}
+                                </p>
+                            </div>
+
+                            {/* Items */}
+                            {schedule.items && (
+                                <ul class="mb-6 space-y-2 grow">
+                                    {schedule.items.map((item) => (
+                                        <li class="flex items-start gap-2 text-sm text-gray-700">
+                                            <span class="text-blue-500 mt-1">
+                                                •
+                                            </span>
+                                            <span>{item}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+
+                            {/* Schedule */}
+                            <div class="space-y-2 border-t border-gray-300 pt-4 mt-auto">
+                                {schedule.schedule.map((time) => (
+                                    <div class="flex justify-between items-center">
+                                        {time.day && (
+                                            <span class="font-semibold text-gray-800">
+                                                {time.day}
+                                            </span>
+                                        )}
+                                        <span class="font-semibold text-gray-800">
+                                            {time.hours}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    );
+                })
+            }
+        </div>
+    </div>
+</section>

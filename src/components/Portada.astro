@@ -1,0 +1,70 @@
+---
+interface Props {
+    href: string;
+    alt?: string;
+    srcImage?: string;
+    title: string;
+    description?: string;
+    transitionId?: string;
+}
+
+const {
+    href,
+    alt = "Portada de la publicación",
+    srcImage,
+    title,
+    description = "Sin descripción disponible.",
+    transitionId = "post-title",
+} = Astro.props;
+
+const hasImage = Boolean(srcImage && srcImage.trim().length > 0);
+---
+
+<a
+    href={href}
+    class="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition duration-200 hover:-translate-y-1 hover:shadow-md"
+>
+    {
+        hasImage ? (
+            <img
+                src={srcImage}
+                alt={alt}
+                class="h-48 w-full shrink-0 object-cover sm:h-52 md:h-56 lg:h-48 xl:h-52"
+            />
+        ) : (
+            <div class="flex h-48 w-full shrink-0 items-center justify-center bg-linear-to-br from-emerald-500 via-lime-400 to-amber-300 sm:h-52 md:h-56 lg:h-48 xl:h-52">
+                <span class="text-sm font-black text-blue-950/90">{title}</span>
+            </div>
+        )
+    }
+
+    <div class="flex flex-1 flex-col justify-around p-4">
+        <h3 class="text-lg font-bold text-slate-900 sm:text-xl" transition:name={transitionId}>
+            {title}
+        </h3>
+
+        <p class="portada-description mt-2 text-sm leading-6 text-slate-600 sm:text-base">
+            {description}
+        </p>
+    </div>
+</a>
+
+<style>
+    .portada-description {
+        position: relative;
+        max-height: 7.2rem;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 4;
+        line-clamp: 4;
+    }
+
+    .portada-description::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 3rem;
+        pointer-events: none;
+    }
+</style>

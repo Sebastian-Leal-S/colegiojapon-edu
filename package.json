@@ -9,9 +9,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "go": "astro build && astro preview",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.2.1"
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.2.9",
+    "astro-icon": "^1.1.5",
+    "tailwindcss": "^4.3.3"
   }
 }

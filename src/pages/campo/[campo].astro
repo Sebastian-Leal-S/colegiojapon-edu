@@ -1,0 +1,16 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { campo: 'inicio' } },
+    { params: { campo: 'academico' } },
+    { params: { campo: 'deportivo' } },
+  ];
+}
+
+const { campo } = Astro.params;
+---
+
+<h1 class="text-2xl">
+  {campo}
+</h1>
+<p class="text-gray-600">Sección del campo.</p>

@@ -1,0 +1,30 @@
+---
+import Portada from "@/components/Portada.astro";
+
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+---
+
+<section class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <h1 class="text-3xl font-bold text-slate-800">Últimas Publicaciones</h1>
+    <p class="mt-2 text-lg text-slate-600">
+        Explora nuestras últimas publicaciones y mantente al día con las novedades.
+    </p>
+    <ul class="mt-4 grid gap-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+        {
+            posts.map((post) => (
+                <li>
+                    <Portada
+                        href={`/posts/${post.id}`}
+                        alt={post.data.description}
+                        srcImage={post.data.portada ?? ""}
+                        title={post.data.title}
+                        description={post.data.description}
+                        transitionId={`post-title-${post.id}`}
+                    />
+                </li>
+            ))
+        }
+    </ul>
+</section>

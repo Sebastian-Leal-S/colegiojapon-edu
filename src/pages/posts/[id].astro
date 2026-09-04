@@ -1,0 +1,51 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts: CollectionEntry<'blog'>[] = await getCollection('blog');
+
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as { post: CollectionEntry<'blog'> };
+const tags = post.data.tags ?? [];
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title}>
+  
+  <article class="max-w-3xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-slate-800 mb-4" transition:name={`post-title-${post.id}`}>
+      {post.data.title}
+    </h1>
+
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-8">
+        {tags.map((tag: string) => (
+          <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <div class="text-slate-700 leading-8
+      [&>h1]:mt-8 [&>h1]:mb-4 [&>h1]:text-4xl [&>h1]:font-extrabold [&>h1]:text-slate-900
+      [&>h2]:mt-7 [&>h2]:mb-3 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-slate-800
+      [&>h3]:mt-6 [&>h3]:mb-2 [&>h3]:text-xl [&>h3]:font-semibold [&>h3]:text-slate-700
+      [&>p]:mb-4 [&>p]:text-base
+      [&>ul]:mb-6 [&>ul]:ml-6 [&>ul]:list-disc
+      [&>ol]:mb-6 [&>ol]:ml-6 [&>ol]:list-decimal
+      [&>li]:mb-2
+      [&>a]:text-blue-600 [&>a]:underline [&>a]:decoration-2 [&>a]:underline-offset-2
+      [&>blockquote]:my-6 [&>blockquote]:border-l-4 [&>blockquote]:border-blue-300 [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-slate-600
+      [&>pre]:my-6 [&>pre]:overflow-x-auto [&>pre]:rounded-xl [&>pre]:bg-slate-900 [&>pre]:p-4 [&>pre]:text-slate-100
+      [&>pre>code]:bg-transparent [&>pre>code]:p-0 [&>code]:rounded [&>code]:bg-slate-200 [&>code]:px-1.5 [&>code]:py-0.5 [&>code]:text-sm [&>code]:text-slate-800">
+      <Content />
+    </div>
+  </article>
+</Layout> 

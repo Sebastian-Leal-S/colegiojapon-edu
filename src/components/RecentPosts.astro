@@ -1,0 +1,84 @@
+---
+import { Icon } from "astro-icon/components";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const posts: CollectionEntry<"blog">[] = await getCollection("blog");
+
+const latestPosts = posts
+  .sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime())
+  .slice(0, 3);
+---
+
+<section class="p-4" aria-labelledby="ultimos-posts">
+    <div
+        class="mb-4 flex flex-col gap-3 border-b border-gray-200 pb-4 sm:flex-row sm:items-end sm:justify-between"
+    >
+        <div>
+            <h2
+                id="latest-posts"
+                class="font-heading text-2xl font-semibold leading-[1.08] tracking-[-0.015em] text-ink-900 sm:text-[1.75rem]"
+            >
+                Ultimas Publicaciones
+            </h2>
+            <p class="mt-1 text-sm text-gray-600">
+                Aquí están las últimas circulares.
+            </p>
+        </div>
+        <a
+            href="/posts"
+            class="group inline-flex min-h-11 items-center gap-1.5 rounded-md font-sans text-sm font-bold text-[#7BA43E] no-underline underline-offset-4 transition-colors duration-200 hover:text-[#99cc4d] hover:underline glass-control self-start px-3.5 sm:self-auto"
+        >
+            Ver todas las publicaciones
+            <Icon
+                name="arrow-right"
+                class="size-5 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-[#99cc4d]"
+                aria-hidden="true"
+            />
+        </a>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {
+            latestPosts.map((post, index) => (
+                <a
+                    href={`/posts/${post.id}`}
+                    class="group block h-full no-underline border border-gray-300 rounded-lg p-4 transition-colors hover:border-accent-700"
+                >
+                    <article class="flex h-full flex-col">
+                        <div class="mb-5 flex items-center justify-between gap-3">
+                            <span class="font-mono text-xs font-semibold text-[#7BA43E]">
+                                {String(index + 1).padStart(2, "0")}
+                            </span>
+                            <time
+                                datetime={post.data.pubDate.toISOString()}
+                                class="font-mono text-xs text-gray-500"
+                            >
+                                {post.data.pubDate.toLocaleDateString("es-CO", {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                })}
+                            </time>
+                        </div>
+                        <h3 class="font-heading text-[1.25rem] font-semibold leading-[1.28] tracking-[-0.01em] text-ink-950 transition-colors group-hover:text-[#7BA43E]">
+                            {post.data.title}
+                        </h3>
+                        {post.data.description && (
+                            <p class="entry-summary mt-2 line-clamp-3">
+                                {post.data.description}
+                            </p>
+                        )}
+                        <span class="mt-auto inline-flex min-h-11 items-center gap-2 pt-4 text-sm font-semibold text-[#7BA43E]">
+                            Leer más
+                            <Icon
+                                name="arrow-right"
+                                class="size-5 transition-transform duration-200 group-hover:translate-x-1"
+                                aria-hidden="true"
+                            />
+                        </span>
+                    </article>
+                </a>
+            ))
+        }
+    </div>
+</section>
